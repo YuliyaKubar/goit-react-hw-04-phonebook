@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import css from './Form.module.css';
 
-export const Form = () => {
+export const Form = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -21,7 +21,7 @@ export const Form = () => {
     }
   };
 
-  const onSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     onSubmit(name, number);
     reset();
@@ -33,7 +33,7 @@ export const Form = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <label>
         Name
         <input
