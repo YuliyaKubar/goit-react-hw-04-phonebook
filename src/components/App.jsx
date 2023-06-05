@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { Form } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -7,7 +7,7 @@ import css from './App.module.css';
 
 export const App = () => {
   const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts'));
+    return JSON.parse(localStorage.getItem('contacts')) ?? [];
   });
 
   const [filter, setFilter] = useState('');
@@ -16,13 +16,16 @@ export const App = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const addContact = (name, number) => {
-    if (contacts.find(contact => contact.name === name)) {
-      alert(`${name} is already in contacts.`);
-      return;
+  const addContact = data => {
+    if (
+      !contacts.find(
+        contact => data.name.toLocaleLowerCase() === contact.name.toLowerCase()
+      )
+    ) {
+      setContacts(prevState => (prevState ? [...prevState, data] : [data]));
+    } else {
+      alert(`${data.name} is already in contacts.`);
     }
-
-    setContacts(prev => [...prev, { id: nanoid(), name, number }]);
   };
 
   const changeFilter = e => {

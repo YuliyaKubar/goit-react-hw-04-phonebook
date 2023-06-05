@@ -5,7 +5,7 @@ export const ContactList = ({ onClick, contacts, filter }) => {
   const filterName = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-  console.log(contacts);
+  // console.log(contacts);
   return (
     <ul>
       {filterName.map(contact => (
