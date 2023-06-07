@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { Form } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -22,15 +22,20 @@ export const App = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const addContact = data => {
+  const addContact = (name, number) => {
+    const newContacts = {
+      name,
+      number,
+      id: nanoid(3),
+    };
     if (
       !contacts.find(
-        contact => data.name.toLowerCase() === contact.name.toLowerCase()
+        contact => newContacts.name.toLowerCase() === contact.name.toLowerCase()
       )
     ) {
-      setContacts(prevState => (prevState ? [...prevState, data] : [data]));
+      setContacts(prevState => [...prevState, newContacts]);
     } else {
-      alert(`${data.name} is already in contacts.`);
+      alert(`${newContacts.name} is already in contacts.`);
     }
     console.log(contacts);
   };
